@@ -278,3 +278,26 @@ footer {
     transform: scale(0.98);
     box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
+
+#sobre{
+    padding: 40px;
+    text-align: center;
+}
+#sobre h2 {
+    color: #ffd700;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+#sobre p {
+    color: #cccccc;
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+#sobre fieldset {
+    border: 2px solid #ffd700;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.25);
+}
