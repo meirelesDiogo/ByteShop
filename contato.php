@@ -73,69 +73,60 @@
             Enviar Mensagem
 
         </button>
+ </form><?php
 
-<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-if($_SERVER["REQUEST_METHOD"]=="POST"){
+    $nome = $_POST["nome"];
+    $email = $_POST["email"];
+    $mensagem = $_POST["mensagem"];
 
-    $nome=$_POST["nome"];
-    $email=$_POST["email"];
-    $mensagem=$_POST["mensagem"];
-
-    try{
-
-        $mail=require 'config/mail.php';
+    try {
+        // Carrega o mailer configurado no seu config/mail.php
+        $mail = require __DIR__ . '/config/mail.php';
 
         $mail->clearAddresses();
+        $mail->clearReplyTos();
 
-        $mail->addAddress($email,$nome);
+        // O e-mail vai DIRETAMENTE PARA O CLIENTE
+        $mail->addAddress($email, $nome);
 
-        $mail->Subject="Recebemos seu contato - ByteShop";
+        // Define o assunto da mensagem que o cliente vai ver
+        $mail->Subject = "Recebemos seu contato - ByteShop";
 
         $mail->isHTML(true);
 
-        $mail->Body="
-
-        <div style='font-family:Arial;padding:30px;'>
-
-        <h2>Olá, {$nome}!</h2>
-
-        <p>
-
-        Recebemos sua mensagem com sucesso.
-
-        </p>
-
-        <hr>
-
-        <h3>Sua mensagem</h3>
-
-        <p>{$mensagem}</p>
-
-        <br>
-
-        <strong>Equipe ByteShop</strong>
-
+        // Corpo do e-mail estruturado para o cliente
+        $mail->Body = "
+        <div style='font-family: Arial, sans-serif; padding: 30px; line-height: 1.6;'>
+            <h2 style='color: #333;'>Olá, {$nome}!</h2>
+            <p>Agradecemos o seu contato. Recebemos sua mensagem com sucesso em nosso sistema!</p>
+            <p>Nossa equipe já está analisando a sua solicitação e entraremos em contato o mais breve possível.</p>
+            <hr style='border: 0; border-top: 1px solid #eee; margin: 20px 0;'>
+            <h3 style='color: #666;'>Cópia da sua mensagem:</h3>
+            <p style='background: #f9f9f9; padding: 15px; border-left: 4px solid #007bff; color: #555;'>
+                " . nl2br(htmlspecialchars($mensagem)) . "
+            </p>
+            <br>
+            <p>Atenciosamente,</p>
+            <strong>Equipe ByteShop</strong>
         </div>
-
         ";
 
+        // Realiza o disparo do e-mail
         $mail->send();
 
-        echo "<p style='color:lime;font-weight:bold;'>Mensagem enviada com sucesso!</p>";
-            }catch(Exception $e){
-
-        echo "<p style='color:red;font-weight:bold;'>
-                Erro ao enviar a mensagem.
-              </p>";
-
+        echo "<p style='color:lime; font-weight:bold; background: rgba(0,0,0,0.8); padding: 10px; border-radius: 5px; text-align: center;'>Mensagem enviada com sucesso!</p>";
+        
+    } catch (Exception $e) {
+               echo "<p style='color:red; font-weight:bold; background: rgba(0,0,0,0.8); padding: 10px; border-radius: 5px; text-align: center;'>
+        Erro no envio: {$mail->ErrorInfo}
+        </p>";
     }
-
 }
 
 ?>
 
-    </form>
 
 </section>
 
