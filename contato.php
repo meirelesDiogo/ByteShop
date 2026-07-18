@@ -1,80 +1,120 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Contato | ByteShop</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="contato.css">
+
 </head>
+
 <body>
-    <nav class="navbar">
-    <a href=""><img src="logo.png" alt="ByteShop"></a>
-    <a href="#catalogo">Catálogo</a>
-    <a href="#sobre">Sobre Nós</a>
+
+<nav class="navbar">
+
+    <a href="index.html">
+        <img src="logo.png" alt="ByteShop">
+    </a>
+
+    <a href="index.html#catalogo">Catálogo</a>
+
+    <a href="index.html#sobre">Sobre Nós</a>
+
     <a href="contato.php">Contato</a>
+
     <a href="carrinho.html">
         <img src="carrinho.png" alt="Carrinho" style="height:30px;">
     </a>
+
 </nav>
 
-<h2>Contato</h2>
+<section class="contato">
 
-<form method="post">
-    Nome: <input type="text" name="nome"><br>
-    Email: <input type="email" name="email"><br>
-    Mensagem: <textarea name="mensagem"></textarea><br>
-    <input type="submit" value="Enviar">
+    <h1>Entre em Contato</h1>
 
-</form>
-    
+    <p>
+    Tem alguma dúvida sobre nossos produtos, pedidos ou precisa de suporte?
+    Nossa equipe está pronta para ajudar. Preencha o formulário abaixo e retornaremos o mais breve possível.
+</p>
 
+    <form method="POST">
+
+        <label>Nome</label>
+
+        <input
+            type="text"
+            name="nome"
+            required
+            placeholder="Digite seu nome">
+
+        <label>Email</label>
+
+        <input
+            type="email"
+            name="email"
+            required
+            placeholder="Digite seu e-mail">
+
+        <label>Mensagem</label>
+
+        <textarea
+            name="mensagem"
+            rows="6"
+            placeholder="Digite sua mensagem..."
+            required></textarea>
+
+        <button type="submit">
+
+            Enviar Mensagem
+
+        </button>
 
 <?php
-require 'config/mail.php';
 
-if($_POST){
-    $nome=$_POST['nome'];
-    $email=$_POST['email'];
-    $mensagem=$_POST['mensagem'];
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+
+    $nome=$_POST["nome"];
+    $email=$_POST["email"];
+    $mensagem=$_POST["mensagem"];
 
     try{
-        $mail = require 'config/mail.php';
 
-        $mail = require 'config/mail.php';
-        // ==========================
-        // EMAIL PARA O CLIENTE
-        // ==========================
+        $mail=require 'config/mail.php';
 
         $mail->clearAddresses();
 
-        $mail->addAddress($email, $nome);
+        $mail->addAddress($email,$nome);
 
-        $mail->Subject = "Recebemos seu contato";
+        $mail->Subject="Recebemos seu contato - ByteShop";
 
-        $mail->Body = "
+        $mail->isHTML(true);
 
-        <div style='font-family:Arial;max-width:600px;margin:auto;padding:20px;border:1px solid #eee;border-radius:10px;'>
+        $mail->Body="
 
-            <h2 style='color:#1e66ff'>
-                Olá, {$nome}!
-            </h2>
+        <div style='font-family:Arial;padding:30px;'>
 
-            <p>
-                Recebemos sua mensagem com sucesso.
-            </p>
+        <h2>Olá, {$nome}!</h2>
 
-            <p>
-                Nossa equipe já foi notificada e responderá o mais rápido possível.
-            </p>
+        <p>
 
-            <hr>
+        Recebemos sua mensagem com sucesso.
 
-            <h3>Sua mensagem</h3>
+        </p>
 
-            <p>{$mensagem}</p>
+        <hr>
 
-            <br>
+        <h3>Sua mensagem</h3>
 
-            <b>ByteShop</b>
+        <p>{$mensagem}</p>
+
+        <br>
+
+        <strong>Equipe ByteShop</strong>
 
         </div>
 
@@ -82,16 +122,102 @@ if($_POST){
 
         $mail->send();
 
-        $sucesso = true;
+        echo "<p style='color:lime;font-weight:bold;'>Mensagem enviada com sucesso!</p>";
+            }catch(Exception $e){
 
-    } catch (Exception $e) {
-
-        $erro = $e->getMessage();
+        echo "<p style='color:red;font-weight:bold;'>
+                Erro ao enviar a mensagem.
+              </p>";
 
     }
-    }
-        
+
+}
 
 ?>
+
+    </form>
+
+</section>
+
+<br><br>
+
+<section>
+
+    <h2>Atendimento</h2>
+
+    <fieldset>
+
+       <p>
+    Nosso atendimento funciona de segunda a sexta-feira,
+    das <strong>08:00 às 18:00</strong>.
+
+    <br><br>
+
+    Respondemos a maioria das solicitações em até
+    <strong>24 horas úteis</strong>.
+</p>
+    </fieldset>
+
+</section>
+
+<br><br>
+
+<section>
+
+    <h2>Localização</h2>
+
+    <fieldset>
+
+        <p>
+
+            ByteShop
+
+            <br>
+
+            Belo Horizonte - MG
+
+            <br>
+
+            Brasil
+
+        </p>
+
+    </fieldset>
+
+</section>
+
+<br><br>
+
+<section>
+
+    
+
+</section>
+
+<br><br><br>
+
+<footer style="text-align:center;padding:25px;">
+
+    <p>
+
+        © <?php echo date("Y"); ?>
+
+        ByteShop.
+
+        Todos os direitos reservados.
+
+    </p>
+
+    <p>
+
+        Desenvolvido por <strong>Diogo Alexandre</strong>
+
+    </p>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>
