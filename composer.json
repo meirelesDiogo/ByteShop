@@ -1,0 +1,18 @@
+{
+    "name": "didia/byte-shop",
+    "autoload": {
+        "psr-4": {
+            "Didia\\ByteShop\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Diogo Alexandre",
+            "email": "didialexandre1017@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^7.1",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
